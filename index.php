@@ -14,7 +14,8 @@
         <div class="nav-links">
             <?php if (isset($_SESSION['user_id'])): ?>
                 <span class="nav-user">Hello, <?= htmlspecialchars($_SESSION['name']) ?></span>
-                <a href="views/browse.php">Browse</a>
+                <a href="views/browse.php">Browse Auctions</a>
+                <a href="views/become_seller.php">Become a Seller</a>
                 <a href="views/logout.php" class="btn-nav">Logout</a>
             <?php else: ?>
                 <a href="views/login.php">Login</a>
@@ -27,8 +28,13 @@
         <h1>Buy & Sell at the Best Price</h1>
         <p>Bangladesh's simple online auction platform.<br>Bid on items, win deals, sell your stuff.</p>
         <div class="hero-btns">
-            <a href="views/register.php" class="btn-orange">Create Account</a>
-            <a href="views/browse.php" class="btn-white-outline">See Auctions</a>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="views/browse.php" class="btn-orange">Browse Auctions</a>
+                <a href="views/become_seller.php" class="btn-white-outline">Become a Seller</a>
+            <?php else: ?>
+                <a href="views/register.php" class="btn-orange">Create Account</a>
+                <a href="views/browse.php" class="btn-white-outline">See Auctions</a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -56,7 +62,11 @@
     <div class="sell-section">
         <h2>Want to Sell?</h2>
         <p>Register first, then apply to become a verified seller. Our admin will approve your request. After approval you can list your items for auction.</p>
-        <a href="views/register.php" class="btn-navy">Register Now</a>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="views/become_seller.php" class="btn-navy">Apply to Sell</a>
+        <?php else: ?>
+            <a href="views/register.php" class="btn-navy">Register Now</a>
+        <?php endif; ?>
     </div>
 
     <div class="footer">

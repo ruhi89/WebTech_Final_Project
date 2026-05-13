@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    header('Location: ../index.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,6 +44,7 @@
                         id="name"
                         name="name"
                         placeholder="e.g. Rahim Uddin"
+                        value="<?= htmlspecialchars($old['name'] ?? '') ?>"
                     >
                     <?php if (isset($errors['name'])): ?>
                         <span class="error-msg"><?= $errors['name'] ?></span>
@@ -48,7 +58,10 @@
                         id="email"
                         name="email"
                         placeholder="e.g. rahim@gmail.com"
+                        value="<?= htmlspecialchars($old['email'] ?? '') ?>"
+                        onblur="checkEmailAvailability()"
                     >
+                    <span id="emailResponse" class="error-msg"></span>
                     <?php if (isset($errors['email'])): ?>
                         <span class="error-msg"><?= $errors['email'] ?></span>
                     <?php endif; ?>
@@ -61,6 +74,7 @@
                         id="phone"
                         name="phone"
                         placeholder="e.g. 01712345678"
+                        value="<?= htmlspecialchars($old['phone'] ?? '') ?>"
                     >
                     <?php if (isset($errors['phone'])): ?>
                         <span class="error-msg"><?= $errors['phone'] ?></span>
@@ -73,7 +87,7 @@
                         id="bio"
                         name="bio"
                         placeholder="Tell us a little about yourself..."
-                    ></textarea>
+                    ><?= htmlspecialchars($old['bio'] ?? '') ?></textarea>
                 </div>
  
                 <div class="form-group">
@@ -116,6 +130,34 @@
     <div class="footer">
         <p>© <?= date('Y') ?> BidBD — Web Technologies Project</p>
     </div>
+
+    <script>
+        function checkEmailAvailability() {
+            var emailInput = document.getElementById("email");
+            var responseEl = document.getElementById("emailResponse");
+            var email = emailInput.value.trim();
+
+            if (email === "") {
+                responseEl.textContent = "";
+                return;
+            }
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        responseEl.textContent = this.responseText;
+                    } else {
+                        responseEl.textContent = "Unable to check email right now.";
+                    }
+                }
+            };
+
+            xhttp.open("POST", "../controllers/checkEmail.php", true);
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhttp.send("email=" + encodeURIComponent(email));
+        }
+    </script>
  
 </body>
 </html>

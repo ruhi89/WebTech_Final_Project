@@ -30,4 +30,14 @@ class UserModel {
         return $ok;
     }
 
+    public function findByEmail(string $email): ?array {
+        $stmt = $this->conn->prepare("SELECT id, name, email, phone, bio, password_hash, role, seller_verified FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        $stmt->close();
+        return $user ?: null;
+    }
+
 }

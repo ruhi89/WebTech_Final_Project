@@ -34,13 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($password !== $confirm)                        
         $errors['confirm']  = 'Passwords do not match.';
 
-    if (!isset($errors['email'])) {
-        $model = new UserModel();
-        if ($model->emailExists($email)) {
-            $errors['email'] = 'This email is already registered.';
-        }
-    }
-
     if (empty($errors)) {
         $model = new UserModel();
         $hash  = password_hash($password, PASSWORD_BCRYPT);
@@ -52,5 +45,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
 include "../views/register.php";
