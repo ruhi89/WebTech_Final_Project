@@ -12,21 +12,27 @@ $old    = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $name     = trim($_POST['name']     ?? '');
-    $email    = trim($_POST['email']    ?? '');
-    $phone    = trim($_POST['phone']    ?? '');
-    $bio      = trim($_POST['bio']      ?? '');
-    $password = $_POST['password']      ?? '';
-    $confirm  = $_POST['confirm']       ?? '';
+    $name     = $_POST['name'];
+    $email    = $_POST['email'];    
+    $phone    = $_POST['phone'];
+    $bio      = $_POST['bio'];
+    $password = $_POST['password'] ;
+    $confirm  = $_POST['confirm'] ;
 
     $old = compact('name', 'email', 'phone', 'bio');
 
-    if ($name === '')                                   $errors['name']     = 'Name is required.';
-    if ($email === '')                                  $errors['email']    = 'Email is required.';
-    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors['email']    = 'Invalid email address.';
-    if ($phone === '')                                  $errors['phone']    = 'Phone is required.';
-    if (strlen($password) < 8)                         $errors['password'] = 'Password must be at least 8 characters.';
-    if ($password !== $confirm)                        $errors['confirm']  = 'Passwords do not match.';
+    if ($name === '')                                   
+        $errors['name']     = 'Name is required.';
+    if ($email === '')                                  
+        $errors['email']    = 'Email is required.';
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        $errors['email']    = 'Invalid email address.';
+    if ($phone === '')                                  
+        $errors['phone']    = 'Phone is required.';
+    if (strlen($password) < 8)                         
+        $errors['password'] = 'Password must be at least 8 characters.';
+    if ($password !== $confirm)                        
+        $errors['confirm']  = 'Passwords do not match.';
 
     if (!isset($errors['email'])) {
         $model = new UserModel();

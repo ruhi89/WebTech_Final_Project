@@ -35,7 +35,6 @@
                         id="name"
                         name="name"
                         placeholder="e.g. Rahim Uddin"
-                        value="<?= htmlspecialchars($old['name'] ?? '') ?>"
                     >
                     <?php if (isset($errors['name'])): ?>
                         <span class="error-msg"><?= $errors['name'] ?></span>
@@ -49,7 +48,6 @@
                         id="email"
                         name="email"
                         placeholder="e.g. rahim@gmail.com"
-                        value="<?= htmlspecialchars($old['email'] ?? '') ?>"
                     >
                     <?php if (isset($errors['email'])): ?>
                         <span class="error-msg"><?= $errors['email'] ?></span>
@@ -63,7 +61,6 @@
                         id="phone"
                         name="phone"
                         placeholder="e.g. 01712345678"
-                        value="<?= htmlspecialchars($old['phone'] ?? '') ?>"
                     >
                     <?php if (isset($errors['phone'])): ?>
                         <span class="error-msg"><?= $errors['phone'] ?></span>
@@ -76,7 +73,7 @@
                         id="bio"
                         name="bio"
                         placeholder="Tell us a little about yourself..."
-                    ><?= htmlspecialchars($old['bio'] ?? '') ?></textarea>
+                    ></textarea>
                 </div>
  
                 <div class="form-group">
