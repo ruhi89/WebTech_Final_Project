@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (isset($_SESSION['user_id'])) {
     header('Location: ../index.php');
@@ -16,7 +18,6 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="brand">BidBD</div>
         <div class="nav-links">
@@ -25,7 +26,6 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </nav>
 
-    <!-- FORM -->
     <div class="form-wrapper">
         <div class="form-box">
 

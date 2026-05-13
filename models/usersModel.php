@@ -1,43 +1,55 @@
 <?php
-include "db.php";
+include "../models/db.php";
 
 class UserModel {
 
-    private mysqli $conn;
+    private $conn;
 
     public function __construct() {
         $this->conn = get_db();
     }
 
-    public function emailExists(string $email): bool {
-        $stmt = $this->conn->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $stmt->store_result();
-        $found = $stmt->num_rows > 0;
-        $stmt->close();
-        return $found;
+    public function emailExists($email) {
+        $email  = $this->conn->real_escape_string($email);
+        $sql    = "SELECT id FROM users WHERE email = '$email'";
+        $result = $this->conn->query($sql);
+        return $result->num_rows > 0;
     }
 
-    public function createUser(string $name, string $email, string $phone, string $bio, string $hash): bool {
-        $stmt = $this->conn->prepare(
-            "INSERT INTO users (name, email, phone, bio, password_hash, role, seller_verified)
-             VALUES (?, ?, ?, ?, ?, 'buyer', 0)"
-        );
-        $stmt->bind_param("sssss", $name, $email, $phone, $bio, $hash);
-        $ok = $stmt->execute();
-        $stmt->close();
-        return $ok;
+    public function createUser($name, $email, $phone, $bio, $hash) {
+        $name  = $this->conn->real_escape_string($name);
+        $email = $this->conn->real_escape_string($email);
+        $phone = $this->conn->real_escape_string($phone);
+        $bio   = $this->conn->real_escape_string($bio);
+        $sql   = "INSERT INTO users (name, email, phone, bio, password_hash, role, seller_verified)
+                  VALUES ('$name', '$email', '$phone', '$bio', '$hash', 'buyer', 0)";
+        return $this->conn->query($sql);
     }
 
-    public function findByEmail(string $email): ?array {
-        $stmt = $this->conn->prepare("SELECT id, name, email, phone, bio, password_hash, role, seller_verified FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
-        $stmt->close();
-        return $user ?: null;
+    public function findByEmail($email) {
+        $email  = $this->conn->real_escape_string($email);
+        $sql    = "SELECT * FROM users WHERE email = '$email'";
+        $result = $this->conn->query($sql);
+        return $result->fetch_assoc();
     }
 
+    public function findById($id) {
+        $id     = $this->conn->real_escape_string($id);
+        $sql    = "SELECT * FROM users WHERE id = '$id'";
+        $result = $this->conn->query($sql);
+        return $result->fetch_assoc();
+    }
+
+    public function updateProfile($id, $name, $phone, $bio) {
+        $name  = $this->conn->real_escape_string($name);
+        $phone = $this->conn->real_escape_string($phone);
+        $bio   = $this->conn->real_escape_string($bio);
+        $sql   = "UPDATE users SET name='$name', phone='$phone', bio='$bio' WHERE id='$id'";
+        return $this->conn->query($sql);
+    }
+
+    public function updatePassword($id, $new_hash) {
+        $sql = "UPDATE users SET password_hash='$new_hash' WHERE id='$id'";
+        return $this->conn->query($sql);
+    }
 }

@@ -13,16 +13,16 @@ $old    = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $email    = trim($_POST['email']    ?? '');
-    $password = $_POST['password']      ?? '';
+    $email    = $_POST['email'];
+    $password = $_POST['password'];
 
     $old = ['email' => $email];
 
-    // Validate
-    if ($email === '')    $errors['email']    = 'Email is required.';
-    if ($password === '') $errors['password'] = 'Password is required.';
+    if ($email === '')    
+        $errors['email']    = 'Email is required.';
+    if ($password === '') 
+        $errors['password'] = 'Password is required.';
 
-    // Check user exists and password matches
     if (empty($errors)) {
         $model = new UserModel();
         $user = $model->findByEmail($email);
@@ -32,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Login success — set session and redirect
     if (empty($errors)) {
         $_SESSION['user_id']         = $user['id'];
         $_SESSION['name']            = $user['name'];

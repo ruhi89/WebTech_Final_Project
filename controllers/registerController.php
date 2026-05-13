@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $model = new UserModel();
         $hash  = password_hash($password, PASSWORD_BCRYPT);
         if ($model->createUser($name, $email, $phone, $bio, $hash)) {
-            header('Location: ../index.php?registered=1');
+            header('Location: ../views/login.php?registered=1');
             exit;
         } else {
             $errors['general'] = 'Something went wrong. Please try again.';

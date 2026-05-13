@@ -13,7 +13,7 @@
         <div class="brand">BidBD</div>
         <div class="nav-links">
             <?php if (isset($_SESSION['user_id'])): ?>
-                <span class="nav-user">Hello, <?= htmlspecialchars($_SESSION['name']) ?></span>
+                <a href="views/profile.php" class="nav-user">Hello, <?= htmlspecialchars($_SESSION['name']) ?></a>
                 <a href="views/browse.php">Browse Auctions</a>
                 <a href="views/become_seller.php">Become a Seller</a>
                 <a href="views/logout.php" class="btn-nav">Logout</a>
