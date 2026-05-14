@@ -11,15 +11,7 @@ include "../controllers/profileController.php";
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="../index.php"><div class="brand">BidBD</div></a>
-        <div class="nav-links">
-            <span class="nav-user">Hello, <?= htmlspecialchars($_SESSION['name']) ?></span>
-            <a href="browse.php">Browse Auctions</a>
-            <a href="become_seller.php">Become a Seller</a>
-            <a href="logout.php" class="btn-nav">Logout</a>
-        </div>
-    </nav>
+    <?php include "partials/nav.php"; ?>
 
     <div class="form-wrapper">
         <div class="form-box" style="max-width: 520px;">
@@ -82,9 +74,7 @@ include "../controllers/profileController.php";
         </div>
     </div>
 
-    <div class="footer">
-        <p>© <?= date('Y') ?> BidBD — Web Technologies Project</p>
-    </div>
+    <?php include "partials/footer.php"; ?>
 
 </body>
 </html>
