@@ -1,8 +1,3 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
 <nav class="navbar">
         <a href="../index.php"><div class="brand">BidBD</div></a>
         <div class="nav-links">

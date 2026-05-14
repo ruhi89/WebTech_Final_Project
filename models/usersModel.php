@@ -1,5 +1,5 @@
 <?php
-include "../models/db.php";
+require_once "db.php";
 
 class UserModel {
 
