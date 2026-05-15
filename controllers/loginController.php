@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['seller_verified'] = $user['seller_verified'];
 
         if ($user['role'] === 'admin') {
-            header('Location: ../views/admin/seller_requests.php');
+            header('Location: ../views/seller_requests.php');
         } else {
             header('Location: ../index.php');
         }
