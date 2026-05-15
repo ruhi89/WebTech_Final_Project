@@ -1,4 +1,4 @@
-<?php include "../controllers/SellerController.php"; ?>
+<?php include "../controllers/sellerController.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +19,6 @@
 
             <?php if ($already_seller): ?>
 
-                <!-- Already a verified seller -->
                 <div class="alert-success">
                     ✅ You are already a verified seller! Go to your
                     <a href="dashboard.php">Seller Dashboard</a> to list items.
@@ -27,7 +26,6 @@
 
             <?php elseif ($success || $already_requested): ?>
 
-                <!-- Request submitted -->
                 <div class="alert-success">
                     ⏳ Your request has been submitted! Please wait for admin approval.
                     You will be able to list items once approved.
@@ -35,7 +33,6 @@
 
             <?php else: ?>
 
-                <!-- Show form -->
                 <?php if ($error): ?>
                     <div class="alert-error"><?= $error ?></div>
                 <?php endif; ?>

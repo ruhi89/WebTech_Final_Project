@@ -2,6 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+$role = $_SESSION['role'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,8 +19,10 @@ if (session_status() === PHP_SESSION_NONE) {
         <div class="nav-links">
             <?php if (isset($_SESSION['user_id'])): ?>
                 <a href="views/profile.php" class="nav-user">Hello, <?= htmlspecialchars($_SESSION['name']) ?></a>
-                <a href="views/browse.php">Browse Auctions</a>
+                <?php if ($role !== 'admin'): ?>
+                <a href="#">Browse Auctions</a>
                 <a href="views/become_seller.php">Become a Seller</a>
+            <?php endif; ?>
                 <a href="views/logout.php" class="btn-nav">Logout</a>
             <?php else: ?>
                 <a href="views/login.php">Login</a>

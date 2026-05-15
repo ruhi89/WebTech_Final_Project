@@ -2,17 +2,13 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-
-// Must be logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../views/login.php');
     exit;
 }
 
-// Admins don't need this page
 if ($_SESSION['role'] === 'admin') {
-    header('Location: ../views/admin/seller_requests.php');
+    header('Location: ../views/seller_requests.php');
     exit;
 }
 
@@ -23,7 +19,7 @@ $success = false;
 $model   = new SellerModel();
 
 $already_requested = $model->requestExists($_SESSION['user_id']);
-$already_seller    = $_SESSION['seller_verified'] == 1;
+$already_seller    = $model->isSeller($_SESSION['user_id']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
