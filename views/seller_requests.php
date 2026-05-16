@@ -69,22 +69,9 @@
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         xhr.onreadystatechange = function () {
-            if (xhr.readyState !== 4) {
-                return;
-            }
+            if (xhr.readyState !== 4) return;
 
-            if (xhr.status < 200 || xhr.status >= 300) {
-                alert('Something went wrong. Please try again.');
-                return;
-            }
-
-            var data = null;
-            try {
-                data = JSON.parse(xhr.responseText);
-            } catch (e) {
-                alert('Invalid response from server.');
-                return;
-            }
+            var data = JSON.parse(xhr.responseText);
 
             if (data.ok) {
                 var row = document.getElementById('row-' + user_id);
@@ -94,7 +81,7 @@
                     row.remove();
                 }
             } else {
-                alert('Error: ' + data.message);
+                alert(data.message || 'Request failed.');
             }
         };
 

@@ -7,11 +7,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['ok' => false, 'message' => 'Invalid request method.']);
-    exit;
-}
-
 $data    = json_decode(file_get_contents('php://input'), true);
 $user_id = intval($data['user_id'] ?? 0);
 
